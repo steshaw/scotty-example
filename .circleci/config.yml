@@ -21,6 +21,7 @@ jobs:
           command: |
             which stack
             stack --version
+            stack setup
             stack build
 
       - setup_remote_docker
