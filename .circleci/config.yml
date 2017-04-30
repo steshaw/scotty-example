@@ -7,6 +7,9 @@ jobs:
     steps:
       - run: |
           echo "Hello CircleCI 2.0"
-          echo "${CIRCLE_BRANCH}"
-          echo "${CIRCLE_PULL_REQUEST}"
-          echo "${CIRCLE_PULL_REQUEST##*/}"
+          echo "CIRCLE_BUILD_NUM = ${CIRCLE_BUILD_NUM} (empty for local builds)"
+          echo "CIRCLE_BRANCH = ${CIRCLE_BRANCH}"
+          echo "CIRCLE_PULL_REQUEST = ${CIRCLE_PULL_REQUEST}"
+          circlePullRequestId=${CIRCLE_PULL_REQUEST##*/}
+          echo "circlePullRequestId = ${circlePullRequestId}"
+          echo "CIRCLE_TAG = ${CIRCLE_TAG}"
