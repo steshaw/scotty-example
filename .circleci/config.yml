@@ -1,9 +1,8 @@
 version: 2
 jobs:
-
-  steps:
-
-    - run: |
+  build:
+    steps:
+      - run: |
         echo Hello
         echo World
         echo CircleCI 2.0
