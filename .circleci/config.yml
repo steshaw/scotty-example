@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: haskell:8.0.2
+      - image: fpco/stack-build:lts-8.5
     working_directory: /app
     steps:
       - run:
