@@ -3,7 +3,7 @@ jobs:
 
   steps:
 
-    run: |
+    - run: |
       echo Hello
       echo World
       echo CircleCI 2.0
