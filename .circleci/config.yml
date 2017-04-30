@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ubuntu:14.04
+    working_directory: /app
+    steps:
+      - run: 
+          name: Environment Variables
+          command: |
+            echo "Hello CircleCI 2.0"
+            echo "CIRCLE_BUILD_NUM = ${CIRCLE_BUILD_NUM} (empty for local builds)"
+            echo "CIRCLE_BRANCH = ${CIRCLE_BRANCH}"
+            echo "CIRCLE_PULL_REQUEST = ${CIRCLE_PULL_REQUEST}"
+            circlePullRequestId=${CIRCLE_PULL_REQUEST##*/}
+            echo "circlePullRequestId = ${circlePullRequestId}"
+            echo "CIRCLE_TAG = ${CIRCLE_TAG}"
