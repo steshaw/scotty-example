@@ -5,7 +5,7 @@ jobs:
       - image: haskell:8.0.2
     working_directory: /app
     steps:
-      - run: 
+      - run:
           name: Environment Variables
           command: |
             echo "Hello CircleCI 2.0"
@@ -15,6 +15,7 @@ jobs:
             circlePullRequestId=${CIRCLE_PULL_REQUEST##*/}
             echo "circlePullRequestId = ${circlePullRequestId}"
             echo "CIRCLE_TAG = ${CIRCLE_TAG}"
+      - checkout
       - run:
           name: Build
           command: |
