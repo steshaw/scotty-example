@@ -22,3 +22,14 @@ jobs:
             which stack
             stack --version
             stack build
+
+      - run:
+          name: Build docker image
+          command: |
+            stack image container
+
+      - run:
+          name: Push image to Docker Hub
+          command: |
+            docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+            docker push steshaw/scotty-example
