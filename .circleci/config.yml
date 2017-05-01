@@ -25,7 +25,7 @@ jobs:
       - checkout
 
       - restore_cache:
-          key: stack-work
+          key: stack
 
       - run:
           name: Build
@@ -37,9 +37,9 @@ jobs:
             stack build
 
       - save_cache:
-          key: stack-work-{{.BuildNum}}
+          key: stack-{{ .BuildNum }}
           paths:
-            - ~/.stack-work
+            - ~/.stack
             - .stack-work
 
       - setup_remote_docker
