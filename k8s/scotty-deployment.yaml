@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: scotty
+  name: scotty
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: scotty
+    spec:
+      containers:
+      - args:
+        - /usr/local/bin/scotty-example
+        image: steshaw/scotty-example
+        name: scotty
+        ports:
+        - containerPort: 3000
+        resources: {}
+  selector:
+    matchLabels:
+      run: scotty
