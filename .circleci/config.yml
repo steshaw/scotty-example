@@ -90,7 +90,7 @@ jobs:
           name: Deploy to GKE
           command: |
             set -eu
-            if [[ -z ${CIRCLE_BUILDNUM} ]]; then
+            if [[ -z ${CIRCLE_BUILD_NUM} ]]; then
               # Deploy to development.
 
               # This is a local build using `circleci`.
