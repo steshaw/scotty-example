@@ -10,7 +10,6 @@ jobs:
       # but this isn't support in CircleCI 2.0 at the moment.
       # This should be built into the base build image anyhow.
       PATH: /opt/google-cloud-sdk/bin:/root/.cabal/bin:/root/.local/bin:/opt/ghc/8.0.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-      image: steshaw/scotty-example:$CIRCLE_SHA1
     steps:
       - run:
           name: Environment Variables
