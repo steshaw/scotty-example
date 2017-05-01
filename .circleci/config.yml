@@ -10,11 +10,13 @@ jobs:
       # but this isn't support in CircleCI 2.0 at the moment.
       # This should be built into the base build image anyhow.
       PATH: /opt/google-cloud-sdk/bin:/root/.cabal/bin:/root/.local/bin:/opt/ghc/8.0.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      image: steshaw/scotty-example:$CIRCLE_SHA1
     steps:
       - run:
           name: Environment Variables
           command: |
             echo "Hello CircleCI 2.0"
+            echo "image = ${image}"
             echo "CIRCLE_BUILD_NUM = ${CIRCLE_BUILD_NUM} (empty for local builds)"
             echo "CIRCLE_BRANCH = ${CIRCLE_BRANCH}"
             echo "CIRCLE_PULL_REQUEST = ${CIRCLE_PULL_REQUEST}"
@@ -54,12 +56,13 @@ jobs:
           name: Build docker image
           command: |
             stack image container
+            docker tag steshaw/scotty-example steshaw/scotty-example:${CIRCLE_SHA1}
 
       - run:
           name: Push image to Docker Hub
           command: |
             docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
-            docker push steshaw/scotty-example
+            docker push steshaw/scotty-example:${CIRCLE_SHA1}
 
       - run:
           name: Install Google Cloud Platform SDK
@@ -107,4 +110,5 @@ jobs:
               # Deploy to production.
               namespace='default'
             fi
+            k8s/scotty-deployment ${namespace} steshaw/scotty-example:${CIRCLE_SHA1}
             kubectl --namespace=${namespace} apply -f k8s/

@@ -1,3 +1,16 @@
+#!/usr/bin/env bash
+
+if [[ $# -ne 2 ]]; then
+  echo "usage: $0 namespace image"
+  exit 2
+fi
+
+namespace=$1; shift
+image=$1; shift
+
+set -eu
+
+kubectl --namespace=${namespace} apply -f - <<!
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -14,7 +27,7 @@ spec:
       containers:
       - args:
         - /usr/local/bin/scotty-example
-        image: steshaw/scotty-example
+        image: ${image}
         name: scotty
         ports:
         - containerPort: 3000
@@ -22,3 +35,4 @@ spec:
   selector:
     matchLabels:
       run: scotty
+!
