@@ -21,7 +21,12 @@ jobs:
             circlePullRequestId=${CIRCLE_PULL_REQUEST##*/}
             echo "circlePullRequestId = ${circlePullRequestId}"
             echo "CIRCLE_TAG = ${CIRCLE_TAG}"
+
       - checkout
+
+      - restore_cache:
+          key: stack-work
+
       - run:
           name: Build
           command: |
@@ -30,6 +35,12 @@ jobs:
             stack --version
             stack setup
             stack build
+
+      - save_cache:
+          key: stack-work-{{.BuildNum}}
+          paths:
+            - .stack-work
+
 
       - setup_remote_docker
 
@@ -72,9 +83,9 @@ jobs:
             gcloud config set project $GCLOUD_PROJECT
             gcloud config set container/cluster $GCLOUD_CLUSTER_NAME
             gcloud container clusters get-credentials $GCLOUD_CLUSTER_NAME
-            kubectl context current-context
-            kubectl context get-contexts
-            kubectl context get-clusters
+            kubectl config current-context
+            kubectl config get-contexts
+            kubectl config get-clusters
 
       - deploy:
           name: Deploy to GKE
