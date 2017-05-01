@@ -10,8 +10,8 @@ main = scotty 3000 $ do
       , "<p>Try going <a href=\"/hello\">Hello</a>.</p>"
       , "<p>Try going <a href=\"/beam\">To Star Trek land</a>.</p>"
       ]
-  get "/hello" $ do
-    html $ "<h1>Hello</h1>Go back <a href=\"/\">Home</a>."
+  get "/welcome" $ do
+    html $ "<h1>Welcome</h1>Go back <a href=\"/\">Home</a>."
   get "/:word" $ do
     beam <- param "word"
     html $ mconcat
