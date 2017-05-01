@@ -39,8 +39,8 @@ jobs:
       - save_cache:
           key: stack-work-{{.BuildNum}}
           paths:
+            - ~/.stack-work
             - .stack-work
-
 
       - setup_remote_docker
 
