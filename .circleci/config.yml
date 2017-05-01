@@ -95,5 +95,5 @@ jobs:
             if [[ ${CIRCLE_BRANCH} != master ]]; then
               namespace="staging-${CIRCLE_BRANCH}"
               k8s/apply-namespace ${namespace}
-              kubectl --namespace=${namespace} -f k8s/
+              kubectl --namespace=${namespace} apply -f k8s/
             fi
