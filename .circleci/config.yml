@@ -75,7 +75,6 @@ jobs:
             GCLOUD_CLUSTER_NAME=k0
             GCLOUD_PROJECT=dev0-166300
             echo $GCLOUD_SERVICE_KEY | base64 --decode >~/gcloud-service-key.json
-            gcloud config set core/disable_prompts true
             gcloud components update
             gcloud components install kubectl
             gcloud auth activate-service-account --key-file ~/gcloud-service-key.json
