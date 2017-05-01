@@ -25,7 +25,7 @@ jobs:
       - checkout
 
       - restore_cache:
-          key: stack-work
+          key: stack
 
       - run:
           name: Build
@@ -37,9 +37,9 @@ jobs:
             stack build
 
       - save_cache:
-          key: stack-work-{{.BuildNum}}
+          key: stack-{{ .BuildNum }}
           paths:
-            - ~/.stack-work
+            - ~/.stack
             - .stack-work
 
       - setup_remote_docker
@@ -90,9 +90,21 @@ jobs:
           name: Deploy to GKE
           command: |
             set -eu
-            env
-            if [[ ${CIRCLE_BRANCH} != master ]]; then
+            if [[ -z ${CIRCLE_BUILD_NUM} ]]; then
+              # Deploy to development.
+
+              # This is a local build using `circleci`.
+              # Currently, the build won't even get this far because you can't
+              # pass in environment variables (secrets) that are configured
+              # in the CircleCI UI.
+              namespace="dev-${CIRCLE_BRANCH}"
+              k8s/apply-namespace ${namespace}
+            elif [[ ${CIRCLE_BRANCH} != master ]]; then
+              # Deploy to staging.
               namespace="staging-${CIRCLE_BRANCH}"
               k8s/apply-namespace ${namespace}
-              kubectl --namespace=${namespace} apply -f k8s/
+            else
+              # Deploy to production.
+              namespace='default'
             fi
+            kubectl --namespace=${namespace} apply -f k8s/
