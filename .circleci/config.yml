@@ -4,6 +4,12 @@ jobs:
     docker:
       - image: fpco/stack-build:lts-8.5
     working_directory: /app
+    environment:
+      CLOUDSDK_CORE_DISABLE_PROMPTS: 1
+      # This is not nice. Just want to prepend /opt/google-cloud-sdk/bin to $PATH
+      # but this isn't support in CircleCI 2.0 at the moment.
+      # This should be built into the base build image anyhow.
+      PATH: /opt/google-cloud-sdk/bin:/root/.cabal/bin:/root/.local/bin:/opt/ghc/8.0.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     steps:
       - run:
           name: Environment Variables
@@ -19,6 +25,7 @@ jobs:
       - run:
           name: Build
           command: |
+            echo PATH=$PATH
             which stack
             stack --version
             stack setup
@@ -42,3 +49,38 @@ jobs:
           command: |
             docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
             docker push steshaw/scotty-example
+
+      - run:
+          name: Install Google Cloud Platform SDK
+          command: |
+              mkdir -p /opt
+              curl -sS https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-153.0.0-linux-x86_64.tar.gz | tar -xzf - -C /opt
+
+      - run:
+          name: Configure Google Cloud Platform SDK
+          command: |
+            GCLOUD_COMPUTE_ZONE=us-central1-b
+            GCLOUD_CLUSTER_NAME=k0
+            GCLOUD_PROJECT=dev0-166300
+            echo $GCLOUD_SERVICE_KEY | base64 --decode >~/gcloud-service-key.json
+            gcloud config set core/disable_prompts true
+            gcloud components update
+            gcloud components install kubectl
+            gcloud auth activate-service-account --key-file ~/gcloud-service-key.json
+            gcloud config set compute/zone $GCLOUD_COMPUTE_ZONE
+            gcloud config set project $GCLOUD_PROJECT
+            gcloud config set container/cluster $CLUSTER_NAME
+            gcloud container clusters get-credentials $GCLOUD_CLUSTER_NAME
+            kubectl context current-context
+            kubectl context get-contexts
+            kubectl context get-clusters
+
+      - deploy:
+          name: Deploy to GKE
+          command: |
+            env
+            if [[ ${CIRCLE_BRANCH} != master ]]; then
+              namespace="staging-${CIRCLE_BRANCH}"
+              k8s/apply-namespace ${namespace}
+              kubectl --namespace=${namespace} -f k8s/
+            fi
