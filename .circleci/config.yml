@@ -59,6 +59,7 @@ jobs:
       - run:
           name: Configure Google Cloud Platform SDK
           command: |
+            set -eu
             GCLOUD_COMPUTE_ZONE=us-central1-b
             GCLOUD_CLUSTER_NAME=k0
             GCLOUD_PROJECT=dev0-166300
@@ -69,7 +70,7 @@ jobs:
             gcloud auth activate-service-account --key-file ~/gcloud-service-key.json
             gcloud config set compute/zone $GCLOUD_COMPUTE_ZONE
             gcloud config set project $GCLOUD_PROJECT
-            gcloud config set container/cluster $CLUSTER_NAME
+            gcloud config set container/cluster $GCLOUD_CLUSTER_NAME
             gcloud container clusters get-credentials $GCLOUD_CLUSTER_NAME
             kubectl context current-context
             kubectl context get-contexts
@@ -78,6 +79,7 @@ jobs:
       - deploy:
           name: Deploy to GKE
           command: |
+            set -eu
             env
             if [[ ${CIRCLE_BRANCH} != master ]]; then
               namespace="staging-${CIRCLE_BRANCH}"
