@@ -15,7 +15,6 @@ jobs:
           name: Environment Variables
           command: |
             echo "Hello CircleCI 2.0"
-            echo "image = ${image}"
             echo "CIRCLE_BUILD_NUM = ${CIRCLE_BUILD_NUM} (empty for local builds)"
             echo "CIRCLE_BRANCH = ${CIRCLE_BRANCH}"
             echo "CIRCLE_PULL_REQUEST = ${CIRCLE_PULL_REQUEST}"
