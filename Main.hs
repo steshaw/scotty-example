@@ -6,7 +6,7 @@ main :: IO ()
 main = scotty 3000 $ do
   get "/" $ do
     html $ mconcat
-      [ "<h1>Hello Betty</h1>"
+      [ "<h1>Hello Bertrand</h1>"
       , "<p>Try going to <a href=\"/welcome\">Welcome</a>.</p>"
       , "<p>Try going to <a href=\"/beam\">Trekkie land</a>.</p>"
       ]
