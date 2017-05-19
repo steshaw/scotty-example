@@ -14,5 +14,7 @@ env PATH=/opt/google-cloud-sdk/bin:$PATH
 env CLOUDSDK_CORE_DISABLE_PROMPTS=1
 run gcloud components update && gcloud components install kubectl
 
-# Install haskell-stack.
-run curl -sSL https://get.haskellstack.org/ | sh
+run mkdir -p /app
+copy webhook /app
+workdir /app
+cmd ./webhook

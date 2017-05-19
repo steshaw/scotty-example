@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+stack --local-bin-path docker build --copy-bins --docker
