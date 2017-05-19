@@ -10,18 +10,17 @@ spec:
   selector:
     matchLabels:
       run: github-webhook
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-    type: RollingUpdate
   template:
     metadata:
       labels:
         run: github-webhook
     spec:
       containers:
-      - name: github-webhook
-        command: [ "/bin/bash", "-c", "sleep infinity" ]
-        image: ubuntu
-        imagePullPolicy: Always
+        - name: github-webhook
+          image: steshaw/k8s-staging-teardown
+          env:
+            - name: WEBHOOK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: webhook
+                  key: webhookSecret

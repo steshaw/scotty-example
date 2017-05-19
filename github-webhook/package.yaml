@@ -1,0 +1,22 @@
+name: webhook
+
+dependencies:
+  - aeson
+  - base
+  - bytestring
+  - github
+  - http-types
+  - scotty
+  - text
+  - turtle
+  - wai-extra
+  - data-default
+
+ghc-options: -Wall -fwarn-tabs
+
+executables:
+  webhook:
+    main: webhook.hs
+    ghc-options:
+      - -threaded -rtsopts -with-rtsopts=-N
+      - -with-rtsopts=-T

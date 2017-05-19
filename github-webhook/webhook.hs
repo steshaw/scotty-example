@@ -1,20 +1,3 @@
-#!/usr/bin/env stack
-{-
-  stack script
-    --resolver lts-8.5
-    --package aeson
-    --package bytestring
-    --package github
-    --package http-types
-    --package scotty
-    --package text
-    --package turtle
-    --package wai-extra
-    --package data-default
-    --
-    -Wall -fwarn-tabs
--}
-
 {-# LANGUAGE OverloadedStrings #-}
 
 module Main where
