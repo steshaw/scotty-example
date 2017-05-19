@@ -62,8 +62,14 @@ serve secret = do
               PullRequestClosed -> do
                 let gitRef = (pullRequestCommitRef . pullRequestHead . pullRequestEventPullRequest) pullRequestEvent
                 liftIO . putStrLn $ "Deleting namespace staging-" <> T.unpack gitRef
-                _ <- liftIO $ proc "echo" ["kubectl", "delete", "namespace", "staging-" <> gitRef] empty
-                return ()
+                exitCode <- liftIO $ proc "echo" ["kubectl", "delete", "namespace", "staging-" <> gitRef] empty
+                case exitCode of
+                  ExitSucess => do
+                    text $ "staging-" <> gitRef <> " deleted successfully"
+                  ExitFailure exitCodeNum => do
+                    status status500
+                    text $ "Unable to delete staging-" <> gitRef <> " namespace"
+                         <> " due to exit code " <> T.pack (show existCodeNum)
               _ -> do
                 status status202
                 text "Event is not a PullRequestClosed"
