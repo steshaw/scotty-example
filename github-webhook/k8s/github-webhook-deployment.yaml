@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: github-webhook
+  name: github-webhook
+  namespace: staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: github-webhook
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: github-webhook
+    spec:
+      containers:
+      - name: github-webhook
+        command: [ "/bin/bash", "-c", "sleep infinity" ]
+        image: ubuntu
+        imagePullPolicy: Always
