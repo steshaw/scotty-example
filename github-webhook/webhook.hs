@@ -61,7 +61,6 @@ serve secret = do
             case pullRequestEventAction pullRequestEvent of
               PullRequestClosed -> do
                 let gitRef = (pullRequestCommitRef . pullRequestHead . pullRequestEventPullRequest) pullRequestEvent
-                liftIO . putStrLn $ "Deleting namespace staging-" <> T.unpack gitRef
                 (kcExitCode, kcStdout, kcStderr) <- liftIO $ procStrictWithErr "kubectl" ["delete", "namespace", "staging-" <> gitRef] empty
                 case kcExitCode of
                   ExitSuccess -> text $ TL.fromStrict kcStdout
