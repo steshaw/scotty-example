@@ -27,6 +27,7 @@ jobs:
       - run:
           name: Print num processors (according to GHC)
           command: |
+            stack upgrade
             scripts/get-num-processors
 
       - restore_cache:
