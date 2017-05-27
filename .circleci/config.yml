@@ -46,17 +46,88 @@ jobs:
 #          key: stack
 
       - run:
-          name: Stack setup
+          name: clean + stack setup
           command: |
+            scripts/clean
             echo PATH=$PATH
             which stack
             stack --version
             stack setup
 
       - run:
-          name: Build
+          name: Build 32
           command: |
-            stack build
+            stack build --jobs 32
+
+      - run:
+          name: clean + stack setup
+          command: |
+            scripts/clean
+            echo PATH=$PATH
+            which stack
+            stack --version
+            stack setup
+
+      - run:
+          name: Build 16
+          command: |
+            stack build --jobs 16
+
+      - run:
+          name: clean + stack setup
+          command: |
+            scripts/clean
+            echo PATH=$PATH
+            which stack
+            stack --version
+            stack setup
+
+      - run:
+          name: Build 8
+          command: |
+            stack build --jobs 8
+
+      - run:
+          name: clean + stack setup
+          command: |
+            scripts/clean
+            echo PATH=$PATH
+            which stack
+            stack --version
+            stack setup
+
+      - run:
+          name: Build 4
+          command: |
+            stack build --jobs 4
+
+      - run:
+          name: clean + stack setup
+          command: |
+            scripts/clean
+            echo PATH=$PATH
+            which stack
+            stack --version
+            stack setup
+
+      - run:
+          name: Build 2
+          command: |
+            stack build --jobs 2
+
+      - run:
+          name: clean + stack setup
+          command: |
+            scripts/clean
+            echo PATH=$PATH
+            which stack
+            stack --version
+            stack setup
+
+      - run:
+          name: Build 1
+          command: |
+            stack build --jobs 1
 
       - save_cache:
           key: stack-{{ .BuildNum }}
