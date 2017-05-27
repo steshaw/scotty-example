@@ -42,16 +42,20 @@ jobs:
             scripts/build-sysconfcpus
             sysconfcpus --num 1 scripts/get-num-processors
 
-      - restore_cache:
-          key: stack
+#      - restore_cache:
+#          key: stack
 
       - run:
-          name: Build
+          name: Stack setup
           command: |
             echo PATH=$PATH
             which stack
             stack --version
             stack setup
+
+      - run:
+          name: Build
+          command: |
             stack build
 
       - save_cache:
