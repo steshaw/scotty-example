@@ -37,6 +37,8 @@ jobs:
             echo "sysconf:"
             (cd sysconf && gcc -Wall -o sysconf sysconf.c)
             sysconf/sysconf
+            echo "_NPROCESSORS_CONF = $(getconf _NPROCESSORS_CONF)"
+            echo "_NPROCESSORS_ONLN = $(getconf _NPROCESSORS_ONLN)"
 
 
       - restore_cache:
