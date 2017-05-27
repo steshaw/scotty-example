@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [[ ! -d sysconfcpus ]]; then
+  git clone https://github.com/obmarg/libsysconfcpus.git
+  cd libsysconfcpus
+  ./configure
+  make install
+fi
