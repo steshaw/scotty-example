@@ -10,9 +10,28 @@ executable          scotty-example
     extensions:     OverloadedStrings
     build-depends:  base   >= 4      && < 5
                   , scotty
+                  , aeson
                   , lens
+                  , blaze-builder
+                  , blaze-markup
                   , servant
                   , servant-client
                   , parsec
                   , megaparsec
                   , trifecta
+                  , amazonka
+                  , yesod
+                  , yesod-auth
+                  , yesod-core
+                  , yesod-form
+                  , yesod-static
+                  , yesod-persistent
+                  , esqueleto
+                  , http-client
+                  , http-client-tls
+                  , http-conduit
+                  , http-types
+                  , template-haskell
+                  , text
+                  , warp
+                  , warp-tls
