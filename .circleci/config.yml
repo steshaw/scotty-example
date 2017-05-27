@@ -29,6 +29,7 @@ jobs:
           command: |
             stack upgrade
             scripts/get-num-processors
+            echo "nproc = $(nproc)"
 
       - restore_cache:
           key: stack
