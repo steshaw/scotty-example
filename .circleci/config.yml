@@ -40,7 +40,7 @@ jobs:
             echo "_NPROCESSORS_CONF = $(getconf _NPROCESSORS_CONF)"
             echo "_NPROCESSORS_ONLN = $(getconf _NPROCESSORS_ONLN)"
             scripts/build-sysconfcpus
-            sysconfcpus -num 1 scripts/get-num-processors
+            sysconfcpus --num 1 scripts/get-num-processors
 
       - restore_cache:
           key: stack
