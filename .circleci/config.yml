@@ -24,6 +24,11 @@ jobs:
 
       - checkout
 
+      - run:
+          name: Print num processors (according to GHC)
+          command: |
+            scripts/get-num-processors
+
       - restore_cache:
           key: stack
 
