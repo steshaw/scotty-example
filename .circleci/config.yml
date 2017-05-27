@@ -30,6 +30,10 @@ jobs:
             stack upgrade
             scripts/get-num-processors
             echo "nproc = $(nproc)"
+            echo "sysconf:"
+            (cd sysconf && gcc -Wall -o sysconf sysconf.c)
+            sysconf/sysconf
+
 
       - restore_cache:
           key: stack
