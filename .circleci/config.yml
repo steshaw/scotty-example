@@ -111,34 +111,6 @@ jobs:
             stack setup
 
       - run:
-          name: Build 2
-          command: |
-            stack build --jobs 2
-
-      - run:
-          name: clean + stack setup
-          command: |
-            scripts/clean
-            echo PATH=$PATH
-            which stack
-            stack --version
-            stack setup
-
-      - run:
-          name: Build 1
-          command: |
-            stack build --jobs 1
-
-      - run:
-          name: clean + stack setup
-          command: |
-            scripts/clean
-            echo PATH=$PATH
-            which stack
-            stack --version
-            stack setup
-
-      - run:
           name: Build (default jobs)
           command: |
             stack build
