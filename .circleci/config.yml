@@ -22,6 +22,10 @@ jobs:
             echo "circlePullRequestId = ${circlePullRequestId}"
             echo "CIRCLE_TAG = ${CIRCLE_TAG}"
 
+      - run:
+          name: CPU info
+          command: cat /proc/cpuinfo
+
       - checkout
 
       - run:
